@@ -2,11 +2,19 @@
 
 namespace Algoritmiek
 {
-    internal class Program
+    public class Program
     {
+        static Event greatEvent = new Event();
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+
+            var printGuests = greatEvent.CreateGuests();
+            Console.WriteLine("Total guests: " + printGuests.Count);
+            foreach (var item in printGuests)
+            {
+                Console.WriteLine(item);
+            }
+            Console.ReadLine();
         }
     }
 }
