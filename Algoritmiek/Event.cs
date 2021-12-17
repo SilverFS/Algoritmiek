@@ -11,16 +11,17 @@ namespace Algoritmiek
         public int totalSeats { get; set; }
 
 
-
         public List<Guest> CreateGuests()
         {
-            for (int i = 0; i < 100; i++)
+            guests = new List<Guest>();
+            Random random = new Random();
+            for (int i = 1; i < 101; i++)
             {
                 guests.Add(new Guest
                 {
-                    guest_id = 1,
-                    OnTime = true,
-                    IsAdult = true,
+                    guest_id = i,
+                    OnTime = Convert.ToBoolean(random.Next(2)),
+                    IsAdult = Convert.ToBoolean(random.Next(2)),
                     group_id = 0,
                 });
             }
