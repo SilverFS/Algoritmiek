@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Algoritmiek
 {
@@ -9,11 +10,21 @@ namespace Algoritmiek
         {
 
             var printGuests = greatEvent.CreateGuests();
+            var printBoxes = greatEvent.CreateBoxes();
             Console.WriteLine("Total guests: " + printGuests.Count);
             foreach (var item in printGuests)
             {
                 Console.WriteLine(item);
             }
+            Console.WriteLine("_____________________");
+
+
+            Console.WriteLine("Boxes: " + printBoxes.Count);
+            foreach (var item in printBoxes)
+            {
+                Console.WriteLine(item);
+            }
+
             Console.ReadLine();
         }
     }
