@@ -10,14 +10,12 @@ namespace Algoritmiek
         public List<Box> boxList { get; set; }
         public List<Guest> guests { get; set; }
         public List<Group> groups { get; set; }
-        public List<Seat> seats { get; set; }
         public int totalSeats { get; set; }
 
 
         // Pre-defined local variables
         static Random random = new Random();
         static int guestCount = random.Next(11, 151);
-        int seatCount = random.Next(11, 151);
 
 
 
@@ -52,22 +50,21 @@ namespace Algoritmiek
         public List<Box> CreateBoxes()
         {
             List<Box> boxList = new List<Box>();
-            List<Row> rowList = new List<Row>();
-            List<Seat> seatList = new List<Seat>();
             // counts specified
-            int boxCount = random.Next(2, 5);
-            int rowCount = random.Next(1, 3);
-            int seatCount = random.Next(3, 10);
+            int boxCount = random.Next(2, 6);
 
             // For the amount of boxes
-            for (int i = 1; i < boxCount; i++)
+            for (int i = 0; i < boxCount; i++)
             {
+                int seatCount = random.Next(3, 11);
+                List<Row> rowList = new List<Row>();
 
-                // For the amount of rows
-                for (int j = 1; j < rowCount; j++)
+                // For the amount of rows                
+                for (int j = 0; j < random.Next(1, 4); j++)
                 {
+                    List<Seat> seatList = new List<Seat>();
                     // For the amount of seats
-                    for (int k = 1; k < seatCount; k++)
+                    for (int k = 0; k < seatCount; k++)
                     {
                         seatList.Add(new Seat
                         {
@@ -80,11 +77,13 @@ namespace Algoritmiek
                     {
                         row_id = j,
                         box_id = i,
+                        seatList = seatList,
                     });
                 }
                 boxList.Add(new Box
                 {
                     box_id = i,
+                    rowList = rowList,
                 });
             }
             return boxList;
