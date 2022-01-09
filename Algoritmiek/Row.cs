@@ -8,6 +8,6 @@ namespace Algoritmiek
     {
         public int row_id { get; set; }
         public int box_id { get; set; }
-        public List<Seat> seats { get; set; }
+        public List<Seat> seatList { get; set; }
     }
 }
