@@ -3,6 +3,8 @@ using Spectre.Console;
 
 namespace Algoritmiek
 {
+
+    //Known issue: new menu entry gives new data.
     public class Program
     {
         static Event greatEvent = new Event();
@@ -17,6 +19,7 @@ namespace Algoritmiek
             }
 
         }
+
         //Menu definition
         private static bool MainMenu()
         {
@@ -48,7 +51,7 @@ namespace Algoritmiek
             }
         }
 
-
+        //Show guests with content
         private static void ListOfGuests()
         {
             var table = new Table();
@@ -71,10 +74,7 @@ namespace Algoritmiek
             AnsiConsole.Markup("\nPress Enter to continue:");
         }
 
-
-
-
-
+        //Show boxes with content
         private static void ListOfBoxes()
         {
             //Add Tree

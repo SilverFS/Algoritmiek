@@ -13,9 +13,14 @@ namespace Algoritmiek
         public int totalSeats { get; set; }
 
 
-        // Pre-defined local variables
+        // Defines Random
         static Random random = new Random();
-        static int guestCount = random.Next(11, 151);
+        // The total amount of guests between 25 and 101.
+        static readonly int guestCount = random.Next(25, 101);
+        // Used for percentage draws
+        // In this case, there is an 80% chance of being true
+        static double trueProbability = 0.8;
+
 
 
 
@@ -30,7 +35,7 @@ namespace Algoritmiek
                 guests.Add(new Guest
                 {
                     guest_id = i,
-                    OnTime = Convert.ToBoolean(random.Next(2)),
+                    OnTime = random.NextDouble() < trueProbability,
                     IsAdult = Convert.ToBoolean(random.Next(2)),
                     group_id = random.Next(0, 9),
                 });
@@ -54,17 +59,17 @@ namespace Algoritmiek
             int boxCount = random.Next(2, 6);
 
             // For the amount of boxes
-            for (int i = 0; i < boxCount; i++)
+            for (int i = 1; i < boxCount; i++)
             {
                 int seatCount = random.Next(3, 11);
                 List<Row> rowList = new List<Row>();
 
                 // For the amount of rows                
-                for (int j = 0; j < random.Next(1, 4); j++)
+                for (int j = 1; j < random.Next(2, 4); j++)
                 {
                     List<Seat> seatList = new List<Seat>();
                     // For the amount of seats
-                    for (int k = 0; k < seatCount; k++)
+                    for (int k = 1; k < seatCount; k++)
                     {
                         seatList.Add(new Seat
                         {
