@@ -16,7 +16,7 @@ namespace Algoritmiek
         // Defines Random
         static Random random = new Random();
         // The total amount of guests between 25 and 101.
-        static readonly int guestCount = random.Next(25, 101);
+        public readonly int guestCount = random.Next(25, 101);
         // Used for percentage draws
         // In this case, there is an 80% chance of being true
         static double trueProbability = 0.8;
@@ -40,6 +40,22 @@ namespace Algoritmiek
                     group_id = random.Next(0, 9),
                 });
             }
+
+            //Removes guest if child and or too late
+            for (int i = 0; i < guests.Count; i++)
+            {
+                if (guests[i].IsAdult == false)
+                {
+                    guests.RemoveAt(i);
+                    i--;
+                }
+                else if (guests[i].OnTime == false)
+                {
+                    guests.RemoveAt(i);
+                    i--;
+                }
+            }
+
             // Order by group_id -> ascending 
             guests = guests.OrderBy(x => x.group_id).ToList();
             return guests;
@@ -76,7 +92,17 @@ namespace Algoritmiek
                             seat_id = k,
                             row_id = j,
                             box_id = i,
+                            //guest = guest_id,
+
                         });
+                        //foreach (var item in guests)
+                        //{
+                        //    seatList.Add(new Seat
+                        //    {
+                        //        guest = item.guest_id,
+                        //    });
+                        //}
+
                     }
                     rowList.Add(new Row
                     {
