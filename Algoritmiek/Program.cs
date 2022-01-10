@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Spectre.Console;
 
 namespace Algoritmiek
@@ -26,10 +28,10 @@ namespace Algoritmiek
             var printGuests = greatEvent.CreateGuests();
             Console.Clear();
             AnsiConsole.Markup("[bold green]Welcome to the event calculator![/] \n");
-            AnsiConsole.Markup("The total guests amount to: " + "[teal slowblink]" + printGuests.Count + "[/]\n\n");
+            AnsiConsole.Markup("The total guests amount to: " + "[teal slowblink]" + greatEvent.guestCount + "[/]\n\n");
             AnsiConsole.Markup("Choose an option:\n");
-            AnsiConsole.Markup("[yellow]1[/]) Displays a table of guests \n");
-            AnsiConsole.Markup("[yellow]2[/]) Displays a tree view of boxes \n");
+            AnsiConsole.Markup("[yellow]1[/]) Displays a dummy table of random guests \n");
+            AnsiConsole.Markup("[yellow]2[/]) Generate event boxes\n");
             AnsiConsole.Markup("\ntype '[red]exit[/]' to exit the program \n");
             AnsiConsole.Write("\r\nSelect an option: ");
 
@@ -57,8 +59,9 @@ namespace Algoritmiek
             var table = new Table();
             table.Border(TableBorder.Simple);
             table.BorderColor(Color.Orange3);
-            var printGuests = greatEvent.CreateGuests();
-            AnsiConsole.Markup("\n[bold]Total guests: [/][teal slowblink]" + printGuests.Count + "[/]\n");
+            List<Guest> printGuests = greatEvent.CreateGuests();
+            AnsiConsole.Markup("\nThe total guests amount to: " + "[teal slowblink]" + greatEvent.guestCount + "[/]\n");
+            AnsiConsole.Markup("[bold]**The Total filtered guests: [/][teal slowblink]" + printGuests.Count + "[/]\n");
             //Add columns
             table.AddColumn("Guest");
             table.AddColumn("On Time");
@@ -70,17 +73,22 @@ namespace Algoritmiek
                 table.AddRow("" + item.guest_id + "", "" + item.OnTime + "", "" + item.IsAdult + "", "" + item.group_id + "");
             }
             AnsiConsole.Write(table);
-            AnsiConsole.Markup("\n[italic]* This table is ordered by group id[/]\n");
+            AnsiConsole.Markup("\n[italic]* This table is ordered by group id\n** This userlist is seperate data for boxes.\n   This means this table is completely irrelevant.[/]");
             AnsiConsole.Markup("\nPress Enter to continue:");
         }
 
         //Show boxes with content
         private static void ListOfBoxes()
         {
-            //Add Tree
-            var root = new Tree("[red bold]Event[/]").Style("red");
+            //Add necessary components
             var printBoxes = greatEvent.CreateBoxes();
+            var printGuestList = greatEvent.CreateGuests();
+            //var boxesAndGuests = printBoxes.Zip(printGuestList, (b, g) => new { Boxes = b, Guests = g });
+            //Add Tree root
+            var root = new Tree("[red bold]Event[/]").Style("red");
+
             AnsiConsole.Markup("\n You have a total of: [teal slowblink]" + printBoxes.Count + "[/] boxes! \n");
+            AnsiConsole.Markup("\n You have a total of: [teal slowblink]" + printGuestList.Count + "[/] guests! \n");
             AnsiConsole.Markup("_____________________\n\n");
             //Add nodes in loops
             foreach (var boxes in printBoxes)
@@ -91,7 +99,7 @@ namespace Algoritmiek
                     var singleRow = singleBox.AddNode("[blue bold]Row [/]" + rows.row_id);
                     foreach (var seats in rows.seatList)
                     {
-                        singleRow.AddNode("[lime bold]Seat [/]" + seats.seat_id);
+                        singleRow.AddNode("[lime bold]Seat [/]" + seats.seat_id + " -> guest: " + printGuestList.Count);
                     }
                 }
             }
