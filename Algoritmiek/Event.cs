@@ -1,168 +1,117 @@
 ﻿using System;
 using System.Collections.Generic;
+using Algoritmiek.Models;
+using Algoritmiek.Containers;
 using System.Linq;
-using System.Text;
 
 namespace Algoritmiek
 {
     public class Event
     {
-        public List<Box> boxList { get; set; }
-        public List<Guest> guests { get; set; }
-        public List<Group> groups { get; set; }
-        public int totalSeats { get; set; }
 
-
-        // Defines Random
-        static Random random = new Random();
-        // The total amount of guests between 25 and 101.
-        public readonly int guestCount = random.Next(25, 101);
-        // Used for percentage draws
-        // In this case, there is an 80% chance of being true
-        static double trueProbability = 0.8;
-
-
-
-
-
-        // Create a random number of guests with groups
-        public List<Guest> CreateGuests()
+        BoxContainer boxContainer = new BoxContainer();
+        GroupContainer groupContainer = new GroupContainer();
+        GuestContainer guestContainer = new GuestContainer();
+        List<Guest> guestList;
+        List<Group> groupList;
+        List<Box> boxList;
+        public Event()
         {
-            guests = new List<Guest>();
-
-            for (int i = 1; i < guestCount; i++)
-            {
-                guests.Add(new Guest
-                {
-                    guest_id = i,
-                    OnTime = random.NextDouble() < trueProbability,
-                    IsAdult = Convert.ToBoolean(random.Next(2)),
-                    group_id = random.Next(0, 9),
-                });
-            }
-
-            //Removes guest if child and or too late
-            for (int i = 0; i < guests.Count; i++)
-            {
-                if (guests[i].IsAdult == false)
-                {
-                    guests.RemoveAt(i);
-                    i--;
-                }
-                else if (guests[i].OnTime == false)
-                {
-                    guests.RemoveAt(i);
-                    i--;
-                }
-            }
-
-            // Order by group_id -> ascending 
-            guests = guests.OrderBy(x => x.group_id).ToList();
-            return guests;
+            guestList = guestContainer.CreateGuestList();
+            groupList = groupContainer.FormGroups(guestList);
+            boxList = boxContainer.CreateBoxes();
         }
 
 
-
-
-
-
-
-
-        public List<Box> CreateBoxes()
+        //Count number of seats
+        public int CountAllSeats()
         {
-            List<Box> boxList = new List<Box>();
-            // counts specified
-            int boxCount = random.Next(2, 6);
-
-            // For the amount of boxes
-            for (int i = 1; i < boxCount; i++)
+            int seatNumber = 0;
+            foreach (var box in boxList)
             {
-                int seatCount = random.Next(3, 11);
-                List<Row> rowList = new List<Row>();
-
-                // For the amount of rows                
-                for (int j = 1; j < random.Next(2, 4); j++)
+                foreach (var row in box.rowList)
                 {
-                    List<Seat> seatList = new List<Seat>();
-                    // For the amount of seats
-                    for (int k = 1; k < seatCount; k++)
+                    foreach (var seat in row.seatList)
                     {
-                        seatList.Add(new Seat
-                        {
-                            seat_id = k,
-                            row_id = j,
-                            box_id = i,
-                            //guest = guest_id,
-
-                        });
-                        //foreach (var item in guests)
-                        //{
-                        //    seatList.Add(new Seat
-                        //    {
-                        //        guest = item.guest_id,
-                        //    });
-                        //}
-
+                        seatNumber++;
                     }
-                    rowList.Add(new Row
-                    {
-                        row_id = j,
-                        box_id = i,
-                        seatList = seatList,
-                    });
                 }
-                boxList.Add(new Box
-                {
-                    box_id = i,
-                    rowList = rowList,
-                });
             }
-            return boxList;
+            return seatNumber;
+        }
+        //Check for enough seats in comparison to guests
+        public bool CheckRoomSeats()
+        {
+
+            if (guestList.Count > CountAllSeats())
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        //Count all children per group
+        public int CountChildrenInGroup()
+        {
+            int allChildrenGroup = 0;
+            //Count all first seats in all first rows
+            foreach (var group in groupList)
+            {
+                var children = group.children.Count;
+                allChildrenGroup += children;
+            }
+            return allChildrenGroup;
+        }
+
+        //Check availability of first row
+        public int CheckEmptyFirstRow()
+        {
+            int allFirstSeats = 0;
+            //Count all first seats in all first rows
+            foreach (var box in boxList)
+            {
+                var firstRow = box.rowList[0].seatList.Count;
+                allFirstSeats += firstRow;
+
+            }
+            return allFirstSeats;
         }
 
 
+        //Place children of group in first row
+        public void PlaceChildrenInRow()
+        {
+
+        }
 
 
+        //Check availability of leftover rows
+        public void CheckEmptyOtherRows()
+        {
+
+        }
 
 
+        //Place leftover group in leftover rows
+        public void PlaceAdultsInRows()
+        {
+
+        }
 
 
-
-
-
-
-
-
-        //public List<Box> makeBox()
-        //{
-        //    var listOfBoxes = new List<int>();
-        //    Random rnd = new Random();
-
-        //    for (int i = 0; i < 10; i++)
-        //    {
-        //        listOfBoxes.Add(rnd.Next(10));
-        //    }
-        //    return listOfBoxes;
-
-
-        //    for (int i = 1; i < 3; i++)
-        //    {
-        //        //make the areas
-        //        Box box = new Box(i, rnd.Next(2, 6));
-        //        boxList.Add(box);
-        //    }
-
-
-
-
-
-        //    var listOfRows = new List<int>();
-
-        //    for (int i = 0; i < 3; i++)
-        //    {
-        //        listOfRows.Add(rnd.Next(3));
-        //    }
-
-        //}
+        //Place groups in boxes
+        public void PlaceGroups(List<Group> groupList, List<Box> boxList)
+        {
+            for (int group = 0; group < groupList.Count; group++)
+            {
+                for (int box = 0; box < boxList.Count; box++)
+                {
+                    //something
+                }
+            }
+        }
     }
 }
