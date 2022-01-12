@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Algoritmiek
+namespace Algoritmiek.Models
 {
     public class Row
     {

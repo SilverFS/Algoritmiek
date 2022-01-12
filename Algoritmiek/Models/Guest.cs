@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Algoritmiek
+namespace Algoritmiek.Models
 {
     public class Guest
     {
@@ -10,6 +10,7 @@ namespace Algoritmiek
         public bool OnTime { get; set; } = true;
         public bool IsAdult { get; set; } = true;
         public int group_id { get; set; }
+
 
         public override string ToString()
         {
