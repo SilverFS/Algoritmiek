@@ -1,9 +1,6 @@
 ﻿using Algoritmiek.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Algoritmiek.Containers
 {
@@ -13,22 +10,18 @@ namespace Algoritmiek.Containers
         //needed: amount of groups, 
         public List<Group> FormGroups(List<Guest> guestList)
         {
-            List<Group> groups = new List<Group>();
-            int count = 0;
-            for (int i = 0; i < guestList.Count; i++)
-            {
-                //Adds users with group id to group until the next id
-                if (guestList[i].group_id == count)
-                {
-                    groups.Add(new Group
-                    {
-                        group_id = count,
-                        children = guestList.Where(x => x.group_id == count && x.IsAdult == false).ToList(),
-                        guestsInGroup = guestList.Where(x => x.group_id == count && x.IsAdult == true).ToList(),
-                    });
-                    count++;
-                }
+            List<Group> groups = new();
+            int allGroups = guestList.Select(x => x.group_id).Distinct().Count();
 
+            for (int i = 0; i < allGroups; i++)
+            {
+                //Adds users with group id to group until the next id  
+                groups.Add(new Group
+                {
+                    group_id = i,
+                    children = guestList.Where(x => x.group_id == i && x.IsAdult == false).ToList(),
+                    adults = guestList.Where(x => x.group_id == i && x.IsAdult == true).ToList(),
+                });
             }
 
             groups = groups.OrderBy(x => x.group_id).ToList();
