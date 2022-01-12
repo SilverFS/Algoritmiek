@@ -16,20 +16,20 @@ namespace Algoritmiek.Containers
         {
             List<Box> boxList = new List<Box>();
             // counts specified
-            int boxCount = random.Next(3, 8);
+            int boxCount = random.Next(3, 5);
 
             // For the amount of boxes
-            for (int i = 1; i < boxCount; i++)
+            for (int i = 1; i <= boxCount; i++)
             {
                 int seatCount = random.Next(3, 11);
                 List<Row> rowList = new List<Row>();
 
                 // For the amount of rows                
-                for (int j = 1; j < random.Next(2, 4); j++)
+                for (int j = 1; j <= random.Next(2, 4); j++)
                 {
                     List<Seat> seatList = new List<Seat>();
                     // For the amount of seats
-                    for (int k = 1; k < seatCount; k++)
+                    for (int k = 1; k <= seatCount; k++)
                     {
                         seatList.Add(new Seat
                         {
