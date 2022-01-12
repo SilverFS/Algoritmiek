@@ -12,9 +12,9 @@ namespace Algoritmiek
         BoxContainer boxContainer = new BoxContainer();
         GroupContainer groupContainer = new GroupContainer();
         GuestContainer guestContainer = new GuestContainer();
-        List<Guest> guestList;
-        List<Group> groupList;
-        List<Box> boxList;
+        public List<Guest> guestList { get; set; }
+        public List<Group> groupList { get; set; }
+        public List<Box> boxList { get; set; }
         public Event()
         {
             guestList = guestContainer.CreateGuestList();
@@ -42,7 +42,6 @@ namespace Algoritmiek
         //Check for enough seats in comparison to guests
         public bool CheckRoomSeats()
         {
-
             if (guestList.Count > CountAllSeats())
             {
                 return false;
@@ -67,7 +66,7 @@ namespace Algoritmiek
         }
 
         //Check availability of first row
-        public int CheckEmptyFirstRow()
+        public int CountFirstRow()
         {
             int allFirstSeats = 0;
             //Count all first seats in all first rows
@@ -84,7 +83,35 @@ namespace Algoritmiek
         //Place children of group in first row
         public void PlaceChildrenInRow()
         {
+            //seat.guest = group.adults.Find(x => x.group_id == group.group_id && x.IsAdult == false);
 
+            //List<Seat> seatList = new();            
+            foreach (var group in groupList)
+            {
+                foreach (var child in group.children)
+                {
+                    bool hasSeat = false;
+                    foreach (var box in boxList)
+                    {
+                        if (hasSeat == true)
+                        {
+                            break;
+                        }
+                        foreach (var seat in box.rowList[0].seatList)
+                        {
+                            if (hasSeat == true)
+                            {
+                                break;
+                            }
+                            if (seat.guest == null)
+                            {
+                                seat.guest = child;
+                                hasSeat = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
 

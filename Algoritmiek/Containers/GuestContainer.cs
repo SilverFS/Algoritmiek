@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Algoritmiek.Containers
 {
@@ -25,7 +23,7 @@ namespace Algoritmiek.Containers
                     guest_id = i,
                     OnTime = random.NextDouble() < trueProbability,
                     IsAdult = Convert.ToBoolean(random.Next(2)),
-                    group_id = random.Next(0, 9),
+                    group_id = random.Next(0, 5),
                 });
             }
 

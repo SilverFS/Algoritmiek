@@ -8,11 +8,11 @@ namespace Algoritmiek.Models
     {
         public int group_id { get; set; }
         public List<Guest> children { get; set; }
-        public List<Guest> guestsInGroup { get; set; }
+        public List<Guest> adults { get; set; }
 
         public override string ToString()
         {
-            return "Group " + group_id + ": " + "Children: " + children + " - " + guestsInGroup;
+            return "Group " + group_id + ": " + "Children: " + children + " - " + adults;
         }
     }
 }

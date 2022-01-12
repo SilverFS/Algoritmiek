@@ -11,6 +11,7 @@ namespace Algoritmiek.Models
         public bool IsAdult { get; set; } = true;
         public int group_id { get; set; }
 
+
         public override string ToString()
         {
             return "Guest " + guest_id + ": " + "On Time: " + OnTime + " - " + "Is Adult: " + IsAdult + " - " + "Group ID: " + group_id;
