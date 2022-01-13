@@ -12,7 +12,7 @@ namespace Algoritmiek.Containers
             Random random = new Random();
             List<Guest> guests = new List<Guest>();
             // The total amount of guests between 25 and 101
-            int guestCount = random.Next(25, 101);
+            int guestCount = random.Next(35, 101);
             // Used for percentage draws. In this case, there is an 80% chance of it being true
             double trueProbability = 0.8;
 
