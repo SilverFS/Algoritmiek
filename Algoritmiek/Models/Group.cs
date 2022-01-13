@@ -9,6 +9,7 @@ namespace Algoritmiek.Models
         public int group_id { get; set; }
         public List<Guest> children { get; set; }
         public List<Guest> adults { get; set; }
+        public bool isPlaced { get; set; }
 
         public override string ToString()
         {
