@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Algoritmiek
+namespace Algoritmiek.Models
 {
-    public class Row
+    public class Seat
     {
+        public int seat_id { get; set; }
         public int row_id { get; set; }
         public int box_id { get; set; }
-        public List<Seat> seatList { get; set; }
+        public Guest guest { get; set; }
     }
 }
