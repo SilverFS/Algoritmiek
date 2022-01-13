@@ -24,7 +24,7 @@ namespace Algoritmiek.Containers
                 });
             }
 
-            groups = groups.OrderBy(x => x.group_id).ToList();
+            groups = groups.OrderByDescending(x => x.children.Count + x.adults.Count).ToList();
             return groups;
         }
     }
