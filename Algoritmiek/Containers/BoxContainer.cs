@@ -16,7 +16,7 @@ namespace Algoritmiek.Containers
         {
             List<Box> boxList = new List<Box>();
             // counts specified
-            int boxCount = random.Next(3, 5);
+            int boxCount = random.Next(3, 4);
 
             // For the amount of boxes
             for (int i = 1; i <= boxCount; i++)
@@ -36,8 +36,6 @@ namespace Algoritmiek.Containers
                             seat_id = k,
                             row_id = j,
                             box_id = i,
-                            //guest = guest_id,
-
                         });
                     }
                     rowList.Add(new Row
@@ -54,6 +52,27 @@ namespace Algoritmiek.Containers
                 });
             }
             return boxList;
+        }
+
+        //Check which box has the most EMPTY seats in first row
+        public List<Box> boxOrderList(List<Box> boxes)
+        {
+            List<Box> sorted = boxes.OrderByDescending(x => x.CountEmptyFirstSeats()).ToList();
+            return sorted;
+        }
+
+        //Count all seats in first row of all boxes
+        public int CountFirstRow(List<Box> boxes)
+        {
+            int allFirstSeats = 0;
+            //Count all first seats in all first rows
+            foreach (Box box in boxes)
+            {
+                int firstRow = box.rowList[0].seatList.Count;
+                allFirstSeats += firstRow;
+
+            }
+            return allFirstSeats;
         }
     }
 }
