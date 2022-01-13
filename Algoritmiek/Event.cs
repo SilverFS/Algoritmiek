@@ -27,11 +27,11 @@ namespace Algoritmiek
         public int CountAllSeats()
         {
             int seatNumber = 0;
-            foreach (var box in boxList)
+            foreach (Box box in boxList)
             {
-                foreach (var row in box.rowList)
+                foreach (Row row in box.rowList)
                 {
-                    foreach (var seat in row.seatList)
+                    foreach (Seat seat in row.seatList)
                     {
                         seatNumber++;
                     }
@@ -52,91 +52,86 @@ namespace Algoritmiek
             }
         }
 
-        //Count all children per group
-        public int CountChildrenInGroup()
+
+        //Check if group with largest amount of children can fit in that row of that box
+        public void PlaceGroupsInBox()
         {
-            int allChildrenGroup = 0;
-            //Count all first seats in all first rows
-            foreach (var group in groupList)
+            List<Box> boxes = boxContainer.boxOrderList(boxList);
+            foreach (Group group in groupList)
             {
-                var children = group.children.Count;
-                allChildrenGroup += children;
-            }
-            return allChildrenGroup;
-        }
-
-        //Check availability of first row
-        public int CountFirstRow()
-        {
-            int allFirstSeats = 0;
-            //Count all first seats in all first rows
-            foreach (var box in boxList)
-            {
-                var firstRow = box.rowList[0].seatList.Count;
-                allFirstSeats += firstRow;
-
-            }
-            return allFirstSeats;
-        }
-
-
-        //Place children of group in first row
-        public void PlaceChildrenInRow()
-        {
-            //seat.guest = group.adults.Find(x => x.group_id == group.group_id && x.IsAdult == false);
-
-            //List<Seat> seatList = new();            
-            foreach (var group in groupList)
-            {
-                foreach (var child in group.children)
+                foreach (Box box in boxes)
                 {
-                    bool hasSeat = false;
-                    foreach (var box in boxList)
+                    //Check seperately if Children en Adults both fit in the box
+                    if (CheckIfChildrenFitInBox(box, group) && CheckIfAdultsFitInBox(box, group)) // == true
                     {
-                        if (hasSeat == true)
-                        {
-                            break;
-                        }
-                        foreach (var seat in box.rowList[0].seatList)
-                        {
-                            if (hasSeat == true)
-                            {
-                                break;
-                            }
-                            if (seat.guest == null)
-                            {
-                                seat.guest = child;
-                                hasSeat = true;
-                            }
-                        }
+                        //if the group fits in the box, continue to next group.
+                        //else, continue to next box.
+                        PlaceChildrenInBox(box, group);
+                        PlaceAdultsInBox(box, group);
+                        break;
                     }
                 }
             }
         }
 
 
-        //Check availability of leftover rows
-        public void CheckEmptyOtherRows()
+        //Check if first empty seats amount to children in group
+        private bool CheckIfChildrenFitInBox(Box oneBox, Group oneGroup)
         {
-
-        }
-
-
-        //Place leftover group in leftover rows
-        public void PlaceAdultsInRows()
-        {
-
-        }
-
-
-        //Place groups in boxes
-        public void PlaceGroups(List<Group> groupList, List<Box> boxList)
-        {
-            for (int group = 0; group < groupList.Count; group++)
+            if (oneBox.CountEmptyFirstSeats() < oneGroup.children.Count)
             {
-                for (int box = 0; box < boxList.Count; box++)
+                return false;
+            }
+            return true;
+        }
+
+        //Place children of group in first row
+        private void PlaceChildrenInBox(Box oneBox, Group oneGroup)
+        {
+            foreach (Guest child in oneGroup.children)
+            {
+                foreach (Seat seat in oneBox.rowList[0].seatList)
                 {
-                    //something
+                    if (seat.guest == null)
+                    {
+                        seat.guest = child;
+                        break;
+                    }
+                }
+            }
+        }
+
+        //Check if first empty seats amount to children in group
+        private bool CheckIfAdultsFitInBox(Box oneBox, Group oneGroup)
+        {
+            if (oneBox.CountOtherEmptySeats() < oneGroup.adults.Count)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        //Place adults of group in row
+        private void PlaceAdultsInBox(Box oneBox, Group oneGroup)
+        {
+            foreach (Guest adult in oneGroup.adults)
+            {
+                bool isPlaced = false;
+                for (int row = 1; row < oneBox.rowList.Count; row++)
+                {
+                    if (isPlaced == true)
+                    {
+                        break;
+                    }
+                    foreach (Seat seat in oneBox.rowList[row].seatList)
+                    {
+                        if (seat.guest == null)
+                        {
+                            seat.guest = adult;
+                            isPlaced = true;
+                            break;
+                        }
+                    }
                 }
             }
         }
