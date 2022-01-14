@@ -68,6 +68,7 @@ namespace Algoritmiek
                         //else, continue to next box.
                         PlaceChildrenInBox(box, group);
                         PlaceAdultsInBox(box, group);
+                        group.isPlaced = true;
                         break;
                     }
                 }

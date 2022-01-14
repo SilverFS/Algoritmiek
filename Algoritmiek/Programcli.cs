@@ -151,15 +151,15 @@ namespace Algoritmiek
                 //Add columns
                 foreach (var item in groupList)
                 {
-                    var singleGroup = root2.AddNode("[orangered1 bold]group id: [/]" + item.group_id + "");
+                    var singleGroup = root2.AddNode($"[orangered1 bold]group id: [/] { item.group_id } --> Placed: {item.isPlaced }");
                     foreach (var child in item.children)
                     {
-                        singleGroup.AddNode("[blue bold]Child ID: [/]" + child.guest_id + "");
+                        singleGroup.AddNode($"[blue bold]Child ID: [/] { child.guest_id } ");
                     }
 
                     foreach (var guest in item.adults)
                     {
-                        singleGroup.AddNode("[blue bold]Adult ID: [/]" + guest.guest_id + "");
+                        singleGroup.AddNode($"[blue bold]Adult ID: [/] { guest.guest_id } ");
                     }
                 }
                 AnsiConsole.Write(root2);
