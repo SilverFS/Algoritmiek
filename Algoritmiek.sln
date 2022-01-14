@@ -5,7 +5,12 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Algoritmiek", "Algoritmiek\Algoritmiek.csproj", "{8A1564B0-C607-4D32-8847-DB66BA846B14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoritmiekTests", "AlgoritmiekTests\AlgoritmiekTests.csproj", "{8A8C227F-E450-4CA8-867D-17B0FDB739F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgoritmiekTests", "AlgoritmiekTests\AlgoritmiekTests.csproj", "{8A8C227F-E450-4CA8-867D-17B0FDB739F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{63E09E25-7866-43F9-B67E-3A97D7044201}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
