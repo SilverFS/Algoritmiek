@@ -11,14 +11,31 @@ namespace AlgoritmiekTests
         [TestMethod]
         public void ShouldCountAllEmptySeatsInFirstRow()
         {
+            //Arrange
             Event sortEvent = new();
-            //create a box with all the content for one box
-            // For the amount of boxes
+            // For the amount of seats in the first row of the first box
             int count = sortEvent.boxList[0].rowList[0].seatList.Count;
             //Act
-            int bruh = sortEvent.boxList[0].CountEmptyFirstSeats();
+            int firstSeats = sortEvent.boxList[0].CountEmptyFirstSeats();
             //Assert
-            Assert.AreEqual(bruh, count);
+            Assert.AreEqual(firstSeats, count);
+        }
+
+        [TestMethod]
+        public void ShouldCountAllOtherEmptySeats()
+        {
+            //Arrange
+            Event sortEvent = new();
+            int count = 0;
+            for (int seatCount = 1; seatCount < sortEvent.boxList[0].rowList.Count; seatCount++)
+            {
+                //foreach amount of seats in the other rows. 
+                count = count + sortEvent.boxList[0].rowList[seatCount].seatList.Count;
+            }
+            //Act
+            int otherSeats = sortEvent.boxList[0].CountOtherEmptySeats();
+            //Assert
+            Assert.AreEqual(otherSeats, count);
         }
     }
 }
