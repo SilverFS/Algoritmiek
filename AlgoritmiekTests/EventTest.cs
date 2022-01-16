@@ -81,7 +81,6 @@ namespace AlgoritmiekTests
         {
             //Arrange
             Event sortEvent = new();
-
             //Act
             sortEvent.PlaceGroupsInBox();
             //Assert
@@ -90,6 +89,17 @@ namespace AlgoritmiekTests
             //Assert.IsTrue(singleGroupPlaced > 0);
             //
             Assert.IsTrue(GroupPlacedInBox(sortEvent.boxList, singleGroupPlaced));
+        }
+
+        [TestMethod]
+        public void ShouldPlaceSingleGuestInBox()
+        {
+            //Arrange
+            Event sortEvent = new();
+            //Act
+            sortEvent.PlaceGroupsInBox();
+            //Assert           
+            Assert.IsTrue(sortEvent.singleGuests[0].isPlaced);
         }
     }
 }
