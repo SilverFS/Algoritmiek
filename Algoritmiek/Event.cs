@@ -13,12 +13,14 @@ namespace Algoritmiek
         GroupContainer groupContainer = new GroupContainer();
         GuestContainer guestContainer = new GuestContainer();
         public List<Guest> guestList { get; set; }
+        public List<Guest> singleGuests { get; set; }
         public List<Group> groupList { get; set; }
         public List<Box> boxList { get; set; }
         public Event()
         {
             guestList = guestContainer.CreateGuestList();
             groupList = groupContainer.FormGroups(guestList);
+            singleGuests = guestContainer.SingleGuests(guestList);
             boxList = boxContainer.CreateBoxes();
         }
 
@@ -73,6 +75,63 @@ namespace Algoritmiek
                     }
                 }
             }
+            foreach (Guest guest in singleGuests)
+            {
+                foreach (Box box in boxes)
+                {
+                    if (CheckIfRemainingGuestsFitFirstRowInBox(box) && guest.isPlaced == false)
+                    {
+                        PlaceRemainingGuests(box, guest);
+                        guest.isPlaced = true;
+                        break;
+                    }
+                    if (CheckIfRemainingGuestsFitRestInBox(box) && guest.isPlaced == false)
+                    {
+                        PlaceRemainingGuests(box, guest);
+                        guest.isPlaced = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        private bool CheckIfRemainingGuestsFitFirstRowInBox(Box oneBox)
+        {
+            if (oneBox.CountEmptyFirstSeats() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool CheckIfRemainingGuestsFitRestInBox(Box oneBox)
+        {
+            if (oneBox.CountOtherEmptySeats() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void PlaceRemainingGuests(Box oneBox, Guest oneGuest)
+        {
+            bool isPlaced = false;
+            for (int row = 0; row < oneBox.rowList.Count; row++)
+            {
+                if (isPlaced == true)
+                {
+                    break;
+                }
+                foreach (Seat seat in oneBox.rowList[row].seatList)
+                {
+                    if (seat.guest == null)
+                    {
+                        seat.guest = oneGuest;
+                        isPlaced = true;
+                        break;
+                    }
+                }
+            }
         }
 
 
@@ -89,14 +148,17 @@ namespace Algoritmiek
         //Place children of group in first row
         private void PlaceChildrenInBox(Box oneBox, Group oneGroup)
         {
-            foreach (Guest child in oneGroup.children)
+            if (oneGroup.group_id > 0)
             {
-                foreach (Seat seat in oneBox.rowList[0].seatList)
+                foreach (Guest child in oneGroup.children)
                 {
-                    if (seat.guest == null)
+                    foreach (Seat seat in oneBox.rowList[0].seatList)
                     {
-                        seat.guest = child;
-                        break;
+                        if (seat.guest == null)
+                        {
+                            seat.guest = child;
+                            break;
+                        }
                     }
                 }
             }
@@ -115,22 +177,25 @@ namespace Algoritmiek
         //Place adults of group in row
         private void PlaceAdultsInBox(Box oneBox, Group oneGroup)
         {
-            foreach (Guest adult in oneGroup.adults)
+            if (oneGroup.group_id > 0)
             {
-                bool isPlaced = false;
-                for (int row = 1; row < oneBox.rowList.Count; row++)
+                foreach (Guest adult in oneGroup.adults)
                 {
-                    if (isPlaced == true)
+                    bool isPlaced = false;
+                    for (int row = 1; row < oneBox.rowList.Count; row++)
                     {
-                        break;
-                    }
-                    foreach (Seat seat in oneBox.rowList[row].seatList)
-                    {
-                        if (seat.guest == null)
+                        if (isPlaced == true)
                         {
-                            seat.guest = adult;
-                            isPlaced = true;
                             break;
+                        }
+                        foreach (Seat seat in oneBox.rowList[row].seatList)
+                        {
+                            if (seat.guest == null)
+                            {
+                                seat.guest = adult;
+                                isPlaced = true;
+                                break;
+                            }
                         }
                     }
                 }
