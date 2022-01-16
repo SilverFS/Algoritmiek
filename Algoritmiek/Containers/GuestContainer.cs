@@ -39,5 +39,25 @@ namespace Algoritmiek.Containers
             guests = guests.OrderBy(x => x.group_id).ToList();
             return guests;
         }
+
+        public List<Guest> SingleGuests(List<Guest> guestList)
+        {
+            List<Guest> singleGuests = new();
+            foreach (var guest in guestList)
+            {
+                if (guest.group_id == 0 && guest.IsAdult == true)
+                {
+                    singleGuests.Add(new Guest
+                    {
+                        guest_id = guest.guest_id,
+                        group_id = guest.group_id,
+                        IsAdult = true,
+                        OnTime = true,
+                    });
+                }
+            }
+            return singleGuests;
+        }
     }
 }
+

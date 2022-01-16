@@ -13,7 +13,7 @@ namespace Algoritmiek.Containers
             List<Group> groups = new();
             int allGroups = guestList.Select(x => x.group_id).Distinct().Count();
 
-            for (int i = 0; i < allGroups; i++)
+            for (int i = 1; i < allGroups; i++)
             {
                 //Adds users with group id to group until the next id  
                 groups.Add(new Group
