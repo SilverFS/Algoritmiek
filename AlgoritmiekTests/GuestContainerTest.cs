@@ -42,5 +42,20 @@ namespace AlgoritmiekTests
             //Assert
             Assert.AreNotEqual(false, guestList[0].OnTime);
         }
+
+        [TestMethod]
+        public void ShouldReturnSingleGuestsWhenCalled()
+        {
+            //Arrange
+            GuestContainer guestContainer = new();
+            List<Guest> guestList;
+            guestList = guestContainer.CreateGuestList();
+            List<Guest> singleGuests;
+            //Act
+            singleGuests = guestContainer.SingleGuests(guestList);
+            //Assert
+            Assert.AreEqual(singleGuests[0].group_id, 0);
+            Assert.AreNotEqual(singleGuests.Count, guestList.Count);
+        }
     }
 }
