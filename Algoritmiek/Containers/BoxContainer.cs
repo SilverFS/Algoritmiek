@@ -54,6 +54,36 @@ namespace Algoritmiek.Containers
             return boxList;
         }
 
+        //Count number of seats
+        public int CountAllSeats(List<Box> boxList)
+        {
+            int seatNumber = 0;
+            foreach (Box box in boxList)
+            {         
+                foreach (Row row in box.rowList)
+                {
+                    foreach (Seat seat in row.seatList)
+                    {
+                        seatNumber++;
+                    }
+                }
+            }
+            return seatNumber;
+        }
+
+        //Check for enough seats in comparison to guests
+        public bool CheckRoomSeats(List<Guest> guestList, List<Box> boxList)
+        {
+            if (guestList.Count > CountAllSeats(boxList))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         //Check which box has the most EMPTY seats in first row
         public List<Box> boxOrderList(List<Box> boxes)
         {

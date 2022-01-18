@@ -39,5 +39,23 @@ namespace Algoritmiek.Models
             }
             return openSeatsInOtherRows;
         }
+
+        public bool CheckIfRemainingGuestsFitFirstRowInBox(Box oneBox)
+        {
+            if (oneBox.CountEmptyFirstSeats() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckIfRemainingGuestsFitRestInBox(Box oneBox)
+        {
+            if (oneBox.CountOtherEmptySeats() > 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

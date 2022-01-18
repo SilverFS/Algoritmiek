@@ -38,21 +38,21 @@ namespace Algoritmiek
             bool showMenu = true;
             while (showMenu)
             {
-                showMenu = MainMenu(sortEvent.guestList, sortEvent.groupList);
+                showMenu = MainMenu(sortEvent.guestList, sortEvent.groupList, sortEvent.boxList);
             }
             AnsiConsole.Markup("[invert bold orchid2]Goodbye![/]\n");
             Thread.Sleep(200);
             return;
 
             //Main Menu
-            bool MainMenu(List<Guest> guestList, List<Group> groupList)
+            bool MainMenu(List<Guest> guestList, List<Group> groupList, List<Box> boxList)
             {
 
                 AnsiConsole.Markup("\n[invert bold green]*Welcome to the event calculator!*[/] \n\n");
                 AnsiConsole.Markup($"[bold]- The total [green]passed[/] guests: [/][teal slowblink]{ guestList.Count }[/]\n");
                 AnsiConsole.Markup($"[bold]- The total groups amount to: [/][teal slowblink]{ groupList.Count - 1 }[/]\n\n");
                 AnsiConsole.Markup($"\nCheck for enough seats in comparison to guests: [orange3 slowblink]" +
-                    $"{ sortEvent.CheckRoomSeats() }[/]. It counts [teal slowblink]{ sortEvent.CountAllSeats() }[/] seats.\n");
+                    $"{ boxContainer.CheckRoomSeats(guestList, boxList) }[/]. It counts [teal slowblink]{ boxContainer.CountAllSeats(boxList) }[/] seats.\n");
                 AnsiConsole.Markup("\nChoose an option:\n");
                 AnsiConsole.Markup("[yellow]1[/]) Displays Box data\n");
                 AnsiConsole.Markup("[yellow]2[/]) Displays a table of guests\n");

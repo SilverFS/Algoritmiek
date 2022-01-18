@@ -25,36 +25,6 @@ namespace Algoritmiek
         }
 
 
-        //Count number of seats
-        public int CountAllSeats()
-        {
-            int seatNumber = 0;
-            foreach (Box box in boxList)
-            {
-                foreach (Row row in box.rowList)
-                {
-                    foreach (Seat seat in row.seatList)
-                    {
-                        seatNumber++;
-                    }
-                }
-            }
-            return seatNumber;
-        }
-        //Check for enough seats in comparison to guests
-        public bool CheckRoomSeats()
-        {
-            if (guestList.Count > CountAllSeats())
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-
         //Check if group with largest amount of children can fit in that row of that box
         public void PlaceGroupsInBox()
         {
@@ -79,13 +49,13 @@ namespace Algoritmiek
             {
                 foreach (Box box in boxes)
                 {
-                    if (CheckIfRemainingGuestsFitFirstRowInBox(box) && guest.isPlaced == false)
+                    if (box.CheckIfRemainingGuestsFitFirstRowInBox(box) && guest.isPlaced == false)
                     {
                         PlaceRemainingGuests(box, guest);
                         guest.isPlaced = true;
                         break;
                     }
-                    if (CheckIfRemainingGuestsFitRestInBox(box) && guest.isPlaced == false)
+                    if (box.CheckIfRemainingGuestsFitRestInBox(box) && guest.isPlaced == false)
                     {
                         PlaceRemainingGuests(box, guest);
                         guest.isPlaced = true;
@@ -95,23 +65,6 @@ namespace Algoritmiek
             }
         }
 
-        private bool CheckIfRemainingGuestsFitFirstRowInBox(Box oneBox)
-        {
-            if (oneBox.CountEmptyFirstSeats() > 0)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private bool CheckIfRemainingGuestsFitRestInBox(Box oneBox)
-        {
-            if (oneBox.CountOtherEmptySeats() > 0)
-            {
-                return true;
-            }
-            return false;
-        }
 
         private void PlaceRemainingGuests(Box oneBox, Guest oneGuest)
         {
