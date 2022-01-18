@@ -3,7 +3,7 @@
 ![](https://img.shields.io/github/last-commit/silverfs/algoritmiek)
 
 
-This project is a console application and a school project used for creating a plan to fill in guests in an event with boxes which contains multiple rows and seats.
+This project is a console application and a school project used for creating a plan to fill in guests in an event. The event contain boxes which each have multiple rows and seats. Guests and guestgroups can then fill in those seats.
 
 Capabilities at execution:
 - Places a groups in boxes, filtered from largest group in corresponding to the largest box
