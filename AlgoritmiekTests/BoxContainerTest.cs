@@ -1,4 +1,5 @@
-﻿using Algoritmiek.Containers;
+﻿using Algoritmiek;
+using Algoritmiek.Containers;
 using Algoritmiek.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -80,6 +81,48 @@ namespace AlgoritmiekTests
             int seatCount = boxContainer.CountFirstRow(boxList);
             //Assert
             Assert.AreEqual(count, seatCount);
+        }
+
+        [TestMethod]
+        public void ShouldReturnCountAllSeatsWhenCalled()
+        {
+            //Arrange
+            BoxContainer boxContainer = new();
+            Event sortEvent = new();
+            int seatNumber = 0;
+            foreach (Box box in sortEvent.boxList)
+            {
+                foreach (Row row in box.rowList)
+                {
+                    foreach (Seat seat in row.seatList)
+                    {
+                        seatNumber++;
+                    }
+                }
+            }
+            //Act
+            int seatCount = boxContainer.CountAllSeats(sortEvent.boxList);
+            //Assert
+            Assert.AreEqual(seatNumber, seatCount);
+        }
+
+        [TestMethod]
+        public void ShouldReturnBoolEnoughSeatsForGuests()
+        {
+            //Arrange
+            BoxContainer boxContainer = new();
+            Event sortEvent = new();
+            int seatCount = boxContainer.CountAllSeats(sortEvent.boxList);
+            int guestCount = sortEvent.guestList.Count;
+            bool notEnoughSeats = true;
+            if (guestCount > seatCount)
+            {
+                notEnoughSeats = false;
+            }
+            //Act
+            bool allSeats = boxContainer.CheckRoomSeats(sortEvent.guestList, sortEvent.boxList);
+            //Assert
+            Assert.AreEqual(allSeats, notEnoughSeats);
         }
     }
 }
